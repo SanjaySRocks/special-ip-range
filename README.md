@@ -13,12 +13,13 @@ Get Special IP Address range using hosting api
 
 To deploy this project run
 
-For Windows Activate Env
+Activate Enviroment:-
+Windows
 ```bash
   .\env\Scripts\activate
 ```
 
-For Linux Activate Env
+Linux
 ```bash
   source env/bin/activate
 ```
