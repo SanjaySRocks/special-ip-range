@@ -13,17 +13,6 @@ Get Special IP Address range using hosting api
 
 To deploy this project run
 
-Activate Enviroment:-
-Windows
-```bash
-  .\env\Scripts\activate
-```
-
-Linux
-```bash
-  source env/bin/activate
-```
-
 Install requirements
 ```bash
   pip install -r requirements
@@ -31,7 +20,7 @@ Install requirements
 
 Run Script
 ```bash
-  py aws.py
+  python aws.py
 ```
 
 
