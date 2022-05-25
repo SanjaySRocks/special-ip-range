@@ -7,11 +7,11 @@ COOLDOWN = 30
 
 """ Initialize """
 session = boto3.Session(profile_name='sanjaycs')
-client = session.client('lightsail')
+client = session.client('ec2')
 
 
 """ Logging """
-logging.basicConfig(filename='lightsail.log', filemode='w', level=logging.INFO, format='%(asctime)s | %(lineno)d | %(message)s')
+logging.basicConfig(filename='ec2.log', filemode='w', level=logging.INFO, format='%(asctime)s | %(lineno)d | %(message)s')
 # logging.disable()
 
 """ Return true if its a special ip range """
@@ -28,17 +28,12 @@ def isSpecial(ip):
 def CreateStaticIP():
     while True:
 
-        ipName='test-static-1'
-        response = client.allocate_static_ip(
-            staticIpName=ipName
-        )
-        
-        logging.info('Create IP Status: {}'.format(response['operations'][0]['status']))
+        response = client.allocate_address()
+        logging.info('Create IP Status: {}'.format(response['PublicIp']))
 
-        if response['operations'][0]['status'] == 'Succeeded':
-
-            static_ip = client.get_static_ip(staticIpName=ipName)
-            ip_address = static_ip['staticIp']['ipAddress']
+        if response['PublicIp']:
+            ip_address = response['PublicIp']
+            allocation_id = response['AllocationId']
 
             logging.info('Created Static IP: {}'.format(ip_address))
             print(ip_address)
@@ -48,8 +43,8 @@ def CreateStaticIP():
                 discordalert.AlertDiscord('{} we found it :D'.format(ip_address))
                 break
             else:
-                release_static_ip = client.release_static_ip(staticIpName=ipName)
-                logging.info('Delete IP Status: {}'.format(release_static_ip['operations'][0]['status']))
+                release_static_ip = client.release_address(AllocationId=allocation_id)
+                logging.info('Delete IP Status: {}'.format(release_static_ip))
 
             time.sleep(int(COOLDOWN))
 

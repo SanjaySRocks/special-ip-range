@@ -7,6 +7,7 @@ Get Special IP Address range using hosting api
 # Hosting Support
 - AWS Lightsail
 - AWS EC2 (coming soon)
+- Digital Ocean
 
 
 ## Deployment
