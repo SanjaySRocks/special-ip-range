@@ -26,9 +26,12 @@ def isSpecial(ip):
 
 """ Main function assign ip Address and checks if its special """
 def CreateStaticIP():
+    import uuid
+    random_hash = str(uuid.uuid4())[:5]
+    ipName='static-ip-{}' .format(random_hash)
+
     while True:
 
-        ipName='test-static-1'
         response = client.allocate_static_ip(
             staticIpName=ipName
         )
